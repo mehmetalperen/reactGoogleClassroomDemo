@@ -1,38 +1,56 @@
+*{
+  margin: 0;
+}
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-rows: 0.2fr 1.5fr 1fr 1.5fr 1.5fr;
+  height: 100vh;
+  grid-template-areas:
+   "navbar navbar navbar navbar navbar navbar"
+   "empty title title title title title"
+   "empty title title title title title"
+   "empty upcoming comment comment comment comment"
+   "empty upcoming prevComment prevComment prevComment prevComment"
+   ;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.navbar {
+  grid-area: navbar;
+  border-style: solid;
+  border-width: 2px;
+
+}
+.class-title-contaniner {
+  grid-area: title;
+
+  border-style: solid;
+  border-width: 2px;
+}
+.emptyness-contaniner {
+  grid-area: empty;
+
+  border-style: solid;
+  border-width: 2px;
+}
+.upcoming-event-contaniner {
+  grid-area: upcoming;
+
+  border-style: solid;
+  border-width: 2px;
+}
+.comment-container {
+  grid-area: comment;
+
+  border-style: solid;
+  border-width: 2px;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.prevComment-container {
+  grid-area: prevComment;
+  border-style: solid;
+  border-width: 2px;
 }
