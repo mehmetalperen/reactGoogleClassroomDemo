@@ -6,9 +6,11 @@ import IconButton from '@material-ui/core/IconButton';
 import FormGroup from '@material-ui/core/FormGroup';
 import "./Navbar.css"
 import HomeIcon from '@material-ui/icons/Home';
+import orange from '@material-ui/core/colors/orange';
 
 
  function Navbar() {
+
 
 
     return(
@@ -17,11 +19,11 @@ import HomeIcon from '@material-ui/icons/Home';
             </FormGroup>
             <AppBar position="static">
                 <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu">
+                <IconButton edge="start" color={orange[50]} aria-label="menu">
                     <HomeIcon />
                 </IconButton>
                 <Typography variant="h6">
-                    Google Classroom
+                    <h4 style={{color: "white"}}>Google Classroom</h4>
                 </Typography>
                 </Toolbar>
             </AppBar>

@@ -11,10 +11,17 @@ import { createMuiTheme} from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#ff7043',
+      main: '#ff8c68',
+      light: 'ffa386'
     },
     secondary: {
-      main: '#f50057',
+      main: '#ff1744',
+      light:'#ff4569'
+    },
+    
+    text: {
+      primary: '#000000',
+      secondary: '#ffffff'
     }
   }
 })
@@ -25,22 +32,22 @@ function App() {
     <ThemeProvider theme = {theme}>
       <div className="App">
         <div className="navbar-wrapper">
-          <Navbar />
+          <Navbar/>
         </div>
 
-        <div className="class-title-contaniner">
+        <div className="class-title-wrapper">
         <ClassTitle />
     
         </div>
-        <div className="emptyness-contaniner">
+        <div className="emptyness-wrapper">
 
         </div>
 
-        <div className="upcoming-event-contaniner">
+        <div className="upcoming-event-wrapper">
           <UpcomingEvent />
         </div>
 
-        <div className="comment-container">
+        <div className="comment-wrapper">
           <Comments /> 
         </div>
 

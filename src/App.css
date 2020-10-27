@@ -1,15 +1,19 @@
 *{
   margin: 0;
+
+
 }
 *::before, *::after {box-sizing: inherit;}
 html {
   box-sizing: border-box;
+  
+
 }
 .App {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
   grid-template-rows: 0.2fr 1.5fr 1fr 1.5fr 1.5fr;
-  height: 100vh;
+
   grid-template-areas:
    "navbar navbar navbar navbar navbar navbar navbar"
    ". title title title title title ."
@@ -17,37 +21,42 @@ html {
    ". upcoming comment comment comment comment ."
    ". upcoming comment comment comment comment ."
    ;
+   grid-gap: 0.8rem;
+   /* background: #e2e1e0; */
+   background-color: white;
 
+   
 }
+
+
 
 
 .navbar-wrapper {
   grid-area: navbar;
+}
+
+.class-title-wrapper {
+  grid-area: title;
+  margin-top: 40px;
 
   
-
 }
-.class-title-contaniner {
-  grid-area: title;
 
-  border-style: solid;
-  border-width: 2px;
-}
-.emptyness-contaniner {
-  grid-area: empty;
 
-}
-.upcoming-event-contaniner {
+.upcoming-event-wrapper {
   grid-area: upcoming;
-
   border-style: solid;
   border-width: 2px;
+  min-height: fit-content;
+
 }
-.comment-container {
-  grid-area: comment;
 
+
+.comment-wrapper {
+  grid-area: comment;
   border-style: solid;
   border-width: 2px;
+  min-height: fit-content;
 
 }
 

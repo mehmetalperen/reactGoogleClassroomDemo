@@ -1,5 +1,6 @@
 import React from 'react'
-
+import NewComment from './newComment'
+import PreComments from './prevComments'
 
 
 
@@ -14,12 +15,12 @@ function Comments(){
         <div>
             
             <div className="comment-container">
-                comment someting
+                <NewComment />
             </div>
 
             <div className="prevComment-container">
-                 prev comments
-                </div>
+                 <PreComments />
+            </div>
         </div>
     )
 }
