@@ -1,31 +1,52 @@
+import React from 'react';
 import './App.css';
+import Navbar from './components/Navbar';
+import ClassTitle from './components/ClassTitle';
+import UpcomingEvent from './components/UpcomingEvent';
+import Comments from './components/CommentsFolder/Comments';
+import {ThemeProvider} from '@material-ui/core';
+import { createMuiTheme} from '@material-ui/core/styles';
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#ff7043',
+    },
+    secondary: {
+      main: '#f50057',
+    }
+  }
+})
+
 
 function App() {
   return (
-    <div className="App">
-     <div className="navbar">
-       <h1>Navbar</h1>
-     </div>
-     <div className="class-title-contaniner">
-       title 
-     </div>
-     <div className="emptyness-contaniner">
-       empty bar
-     </div>
+    <ThemeProvider theme = {theme}>
+      <div className="App">
+        <div className="navbar-wrapper">
+          <Navbar />
+        </div>
 
-     <div className="upcoming-event-contaniner">
-       upcomming
-     </div>
+        <div className="class-title-contaniner">
+        <ClassTitle />
+    
+        </div>
+        <div className="emptyness-contaniner">
 
-     <div className="comment-container">
-       comment someting
-     </div>
+        </div>
 
-     <div className="prevComment-container">
-       prev comments
-     </div>
-      
-    </div>
+        <div className="upcoming-event-contaniner">
+          <UpcomingEvent />
+        </div>
+
+        <div className="comment-container">
+          <Comments /> 
+        </div>
+
+        
+      </div>
+    </ThemeProvider>
     
   );
 }
