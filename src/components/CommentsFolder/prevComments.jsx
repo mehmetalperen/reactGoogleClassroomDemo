@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import RouncProfilePic from '../RoundProfilePic'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from "@material-ui/core/Button"
@@ -6,7 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import SendIcon from '@material-ui/icons/Send';
 import FormControl from 'react-bootstrap/FormControl'
 import './prevComments.css'
-
+import ReplyComment from './ReplyComment'
 function PreComments(props){
 
 let createdDate = {
@@ -55,6 +55,29 @@ switch(createdDate.month) {
         break;
 }
 
+const [typingReply, setTypingReply] = useState('');
+const handleTypingReply = event => {
+    setTypingReply(event.target.value);
+}
+
+const [replyComments, setReplyComments] = useState([]);
+const handleAddReply = () => {
+    let replyObj = {
+        id: replyComments.length+1,
+        reply: typingReply,
+        timeCreated: {
+            month: new Date().getMonth(),
+            day: new Date().getDate()
+        }
+    }
+
+    setReplyComments(prevReplies => {
+        return [...prevReplies, replyObj]
+    });
+}
+
+
+ 
 
     return(
         <div className="prevComment-box" style={{marginBottom: "20px"}}>
@@ -79,17 +102,33 @@ switch(createdDate.month) {
             <RouncProfilePic/> 
             <InputGroup className="input-form" className="mb-3">
                 <FormControl
+                onChange={handleTypingReply}
                 placeholder="Add comment.."
                 aria-label="Add comment"
                 aria-describedby="basic-addon2"
+                value={typingReply}
                 />
                 <InputGroup.Append>
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" onClick={handleAddReply}>
                         <SendIcon color="primary" />
                     </IconButton>                     
                 </InputGroup.Append>
             </InputGroup>
             </div>
+
+            {replyComments.length > 0? 
+            <div>
+            <hr />
+            <h6>{replyComments.length} <span style={{fontWeight: "lighter"}}>Comment</span></h6>
+            </div>: null}
+            {replyComments.map(el => {
+                return (<ReplyComment key={el.id} id={el.id}date={el.timeCreated} reply={el.reply}/>)
+            })}
+            
+            {/* reply to the comments */}
+            {/* hr
+            h6
+             */}
         </div>
     )
 }
