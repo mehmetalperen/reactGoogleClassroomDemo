@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import ClassTitle from './components/ClassTitle';
@@ -6,6 +6,7 @@ import UpcomingEvent from './components/UpcomingEvent';
 import Comments from './components/CommentsFolder/Comments';
 import {ThemeProvider} from '@material-ui/core';
 import { createMuiTheme} from '@material-ui/core/styles';
+
 
 
 const theme = createMuiTheme({
@@ -18,16 +19,24 @@ const theme = createMuiTheme({
       main: '#ff1744',
       light:'#ff4569'
     },
-    
     text: {
       primary: '#000000',
       secondary: '#ffffff'
+    },
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        textTransform:"none"
+      }
     }
   }
 })
 
 
 function App() {
+
+
   return (
     <ThemeProvider theme = {theme}>
       <div className="App">
