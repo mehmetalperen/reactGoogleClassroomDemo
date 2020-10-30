@@ -74,7 +74,7 @@ const handleAddReply = () => {
         ID = 0;
     }
     let replyObj = {
-        id: ID,
+        id: ID,  
         reply: typingReply,
         timeCreated: {
             month: new Date().getMonth(),
@@ -85,6 +85,7 @@ const handleAddReply = () => {
     setReplyComments(prevReplies => {
         return [...prevReplies, replyObj]
     });
+    setTypingReply('')
     console.log(replyComments)
 }
 
@@ -93,15 +94,15 @@ const [messeageToggle, setMesseageToggle] = useState('Comment')
 
 
 
-setInterval(() => {//having problem here, Ig
-    if (!showMoreComments && replyComments.length > 0) {
-        messeageToggle === 'Comment'? setMesseageToggle('Show more'): setMesseageToggle('Comment')
+// setInterval(() => {//having problem here, Ig
+//     if (!showMoreComments && replyComments.length > 0) {
+//         messeageToggle === 'Comment'? setMesseageToggle('Show more'): setMesseageToggle('Comment')
         
-    } else if (showMoreComments && replyComments.length > 0 && messeageToggle!=='Show less'){
-        setMesseageToggle("Show less");
+//     } else if (showMoreComments && replyComments.length > 0 && messeageToggle!=='Show less'){
+//         setMesseageToggle("Show less");
 
-    }
-}, 3000);
+//     }
+// }, 3000);
 
 
  
@@ -117,9 +118,16 @@ setInterval(() => {//having problem here, Ig
                     </div>
 
                 </div>
-                <IconButton className="editBtn" aria-label="edit">
-                    <MoreVertIcon />
-                </IconButton>                
+                <div className="editBtn-contanier">
+                    <div className="dropdown-btn">
+                        <button><MoreVertIcon /></button>
+                        <ul>
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Delete</a></li>
+                            <li><a href="#">Copy Link</a></li>
+                        </ul>
+                    </div>
+                </div>           
 
 
             
@@ -137,7 +145,7 @@ setInterval(() => {//having problem here, Ig
                     value={typingReply}
                     />
                     <InputGroup.Append>
-                        <IconButton aria-label="delete" onClick={handleAddReply}>
+                        <IconButton aria-label="delete" onClick={(handleAddReply)}>
                             <SendIcon color="primary" />
                         </IconButton>                     
                     </InputGroup.Append>
