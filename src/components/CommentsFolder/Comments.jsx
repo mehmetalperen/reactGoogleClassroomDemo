@@ -12,9 +12,12 @@ function Comments(){
 
 
     const handleAddComment = newComment => {
-        console.log(commentsList)
+        let ID;
+        if (commentsList.length > 0) {
+            ID = commentsList[commentsList.length-1].id + 1
+        }
         let commetObj = {
-            id: commentsList.length,
+            id: ID,
             comment: newComment,
             timeCreated: {
                 month: new Date().getMonth(),

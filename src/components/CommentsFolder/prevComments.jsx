@@ -7,6 +7,11 @@ import SendIcon from '@material-ui/icons/Send';
 import FormControl from 'react-bootstrap/FormControl'
 import './prevComments.css'
 import ReplyComment from './ReplyComment'
+
+
+
+
+
 function PreComments(props){
 
 let createdDate = {
@@ -62,8 +67,14 @@ const handleTypingReply = event => {
 
 const [replyComments, setReplyComments] = useState([]);
 const handleAddReply = () => {
+    let ID;
+    if(replyComments.length >0) {
+        ID = replyComments[replyComments.length-1].id + 1
+    } else {
+        ID = 0;
+    }
     let replyObj = {
-        id: replyComments.length+1,
+        id: ID,
         reply: typingReply,
         timeCreated: {
             month: new Date().getMonth(),
@@ -74,7 +85,23 @@ const handleAddReply = () => {
     setReplyComments(prevReplies => {
         return [...prevReplies, replyObj]
     });
+    console.log(replyComments)
 }
+
+const [showMoreComments, setShowMoreComments] = useState(false);
+const [messeageToggle, setMesseageToggle] = useState('Comment')
+
+
+
+setInterval(() => {//having problem here, Ig
+    if (!showMoreComments && replyComments.length > 0) {
+        messeageToggle === 'Comment'? setMesseageToggle('Show more'): setMesseageToggle('Comment')
+        
+    } else if (showMoreComments && replyComments.length > 0 && messeageToggle!=='Show less'){
+        setMesseageToggle("Show less");
+
+    }
+}, 3000);
 
 
  
@@ -95,40 +122,53 @@ const handleAddReply = () => {
                 </IconButton>                
 
 
-
+            
             <p style={{margin: '10px 10px 10px 30px'}} className="comment-p">{props.comment}</p>
 
             <div style={{margin: '10px'}}className="reply-comment-container">
-            <RouncProfilePic/> 
-            <InputGroup className="input-form" className="mb-3">
-                <FormControl
-                onChange={handleTypingReply}
-                placeholder="Add comment.."
-                aria-label="Add comment"
-                aria-describedby="basic-addon2"
-                value={typingReply}
-                />
-                <InputGroup.Append>
-                    <IconButton aria-label="delete" onClick={handleAddReply}>
-                        <SendIcon color="primary" />
-                    </IconButton>                     
-                </InputGroup.Append>
-            </InputGroup>
+            <div style={{display: "flex"}}>
+                <RouncProfilePic/> 
+                <InputGroup className="input-form" className="mb-3">
+                    <FormControl
+                    onChange={handleTypingReply}
+                    placeholder="Add comment.."
+                    aria-label="Add comment"
+                    aria-describedby="basic-addon2"
+                    value={typingReply}
+                    />
+                    <InputGroup.Append>
+                        <IconButton aria-label="delete" onClick={handleAddReply}>
+                            <SendIcon color="primary" />
+                        </IconButton>                     
+                    </InputGroup.Append>
+                </InputGroup>                
             </div>
 
-            {replyComments.length > 0? 
-            <div>
-            <hr />
-            <h6>{replyComments.length} <span style={{fontWeight: "lighter"}}>Comment</span></h6>
-            </div>: null}
-            {replyComments.map(el => {
-                return (<ReplyComment key={el.id} id={el.id}date={el.timeCreated} reply={el.reply}/>)
-            })}
-            
-            {/* reply to the comments */}
-            {/* hr
-            h6
-             */}
+                {
+                replyComments.length > 0? 
+                <div style={{display: "block", padding: "10px"}}>
+                    <hr />
+                    <h6
+                        onClick={()=> {
+                            setShowMoreComments(!showMoreComments)
+                            }}>{replyComments.length} <span style={{fontWeight: "lighter"}}>{messeageToggle}</span></h6>
+                </div>:
+                 null
+                 }
+
+
+                {
+                    showMoreComments?//I want it to render newest to oldes but it does the opposite. I think I could achieve my goal by using for loop. but I feel like there is a better way of doing it.
+                    replyComments.map(el => {
+                    return (<ReplyComment key={el.id} id={el.id} date={el.timeCreated} reply={el.reply}/>)
+                }):
+                 null
+                }
+                
+                      
+            </div>
+
+
         </div>
     )
 }

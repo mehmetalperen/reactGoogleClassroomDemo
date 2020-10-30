@@ -6,7 +6,7 @@
     border-width: 1px; border-color: rgb(137, 137, 141);
     display: grid;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: 1.2fr 1fr 1fr;
+    grid-template-rows: 0.2fr 0.5fr 0.5fr;
     grid-template-areas: 
     "commentInfo editBtn"
     "comment comment"
@@ -22,21 +22,23 @@
 
 .commenter-info-box{
     grid-area: commentInfo;
-    height: fit-content;
+    max-height: 50px;
     display: flex;
 }
 
 .editBtn {
     grid-area: editBtn;
+    max-height: 50px;
 }
 
 .comment-p {
     grid-area: comment;
+    min-height: 100px;
+    overflow-y: scroll;
 }
 
 .reply-comment-container {
     grid-area: reply;
-    display: flex;
     
 
 }
