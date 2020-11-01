@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import RouncProfilePic from '../RoundProfilePic'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from "@material-ui/core/Button"
@@ -7,6 +7,7 @@ import SendIcon from '@material-ui/icons/Send';
 import FormControl from 'react-bootstrap/FormControl'
 import './prevComments.css'
 import ReplyComment from './ReplyComment'
+import { reverseMap } from '../util/helpers';
 
 
 
@@ -94,22 +95,18 @@ const [messeageToggle, setMesseageToggle] = useState('Comment')
 
 
 
-// setInterval(() => {//having problem here, Ig
-//     if (!showMoreComments && replyComments.length > 0) {
-//         messeageToggle === 'Comment'? setMesseageToggle('Show more'): setMesseageToggle('Comment')
-        
-//     } else if (showMoreComments && replyComments.length > 0 && messeageToggle!=='Show less'){
-//         setMesseageToggle("Show less");
-
-//     }
-// }, 3000);
+useEffect(() => {
+    console.log(`fdsjkljklfdsjkods`)
+    
+}, [showMoreComments]);
 
 
  
 
     return(
         <div className="prevComment-box" style={{marginBottom: "20px"}}>
-
+        
+            <div className="comment-header">
                 <div style={{margin: "10px 10px 0 10px"}} className="commenter-info-box">
                     <RouncProfilePic style={{margin: "10px"}}/>
                     <div style={{margin: "0 0 0 20px"}}>
@@ -128,10 +125,11 @@ const [messeageToggle, setMesseageToggle] = useState('Comment')
                         </ul>
                     </div>
                 </div>           
+            </div>
 
-
-            
-            <p style={{margin: '10px 10px 10px 30px'}} className="comment-p">{props.comment}</p>
+            <div className="main-content-container">
+                <p className="comment-p">{props.comment}</p>
+            </div>
 
             <div style={{margin: '10px'}}className="reply-comment-container">
             <div style={{display: "flex"}}>
@@ -167,7 +165,7 @@ const [messeageToggle, setMesseageToggle] = useState('Comment')
 
                 {
                     showMoreComments?//I want it to render newest to oldes but it does the opposite. I think I could achieve my goal by using for loop. but I feel like there is a better way of doing it.
-                    replyComments.map(el => {
+                    reverseMap(replyComments, el => {
                     return (<ReplyComment key={el.id} id={el.id} date={el.timeCreated} reply={el.reply}/>)
                 }):
                  null
