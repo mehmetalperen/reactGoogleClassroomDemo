@@ -87,17 +87,16 @@ const handleAddReply = () => {
         return [...prevReplies, replyObj]
     });
     setTypingReply('')
-    console.log(replyComments)
 }
 
 const [showMoreComments, setShowMoreComments] = useState(false);
-const [messeageToggle, setMesseageToggle] = useState('Comment')
+const [messeageToggle, setMesseageToggle] = useState('Show')
 
 
 
 useEffect(() => {
-    console.log(`fdsjkljklfdsjkods`)
-    
+
+    !showMoreComments? setMesseageToggle('Show'): setMesseageToggle("Hide")
 }, [showMoreComments]);
 
 
@@ -117,10 +116,12 @@ useEffect(() => {
                 </div>
                 <div className="editBtn-contanier">
                     <div className="dropdown-btn">
-                        <button><MoreVertIcon /></button>
+                        <button ><MoreVertIcon /></button>
                         <ul>
                             <li><a href="#">Edit</a></li>
-                            <li><a href="#">Delete</a></li>
+                            <li onClick={()=>{
+                                props.onDeleteComment(props.id)
+                                }}><a>Delete</a></li>
                             <li><a href="#">Copy Link</a></li>
                         </ul>
                     </div>
@@ -143,7 +144,7 @@ useEffect(() => {
                     value={typingReply}
                     />
                     <InputGroup.Append>
-                        <IconButton aria-label="delete" onClick={(handleAddReply)}>
+                        <IconButton aria-label="add" onClick={(handleAddReply)}>
                             <SendIcon color="primary" />
                         </IconButton>                     
                     </InputGroup.Append>
@@ -154,10 +155,10 @@ useEffect(() => {
                 replyComments.length > 0? 
                 <div style={{display: "block", padding: "10px"}}>
                     <hr />
-                    <h6
+                    <h6 className="show-hide-h6"
                         onClick={()=> {
                             setShowMoreComments(!showMoreComments)
-                            }}>{replyComments.length} <span style={{fontWeight: "lighter"}}>{messeageToggle}</span></h6>
+                            }}>{replyComments.length} <span style={{fontWeight: "lighter"}}> Comment {messeageToggle}</span></h6>
                 </div>:
                  null
                  }

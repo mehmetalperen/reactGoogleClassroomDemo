@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import NewComment from './newComment'
 import PreComments from './prevComments'
 import './Comments.css'
+import { reverseMap } from '../util/helpers';
 
 
 
@@ -15,6 +16,8 @@ function Comments(){
         let ID;
         if (commentsList.length > 0) {
             ID = commentsList[commentsList.length-1].id + 1
+        } else {
+            ID = 0;
         }
         let commetObj = {
             id: ID,
@@ -25,10 +28,21 @@ function Comments(){
             }
         }
 
-        
-        setCommentsList(prevComments => {return [...prevComments, commetObj]}); //WTF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        console.log(commentsList);
+        setCommentsList(prevComments => {return [...prevComments, commetObj]});
+    }
+
+    const handleDeleteComment = deleteCommentID => {
+        setCommentsList(prevComments => {
+            return prevComments.filter(comment => {
+                return comment.id !== deleteCommentID;
+            })
+        })
+        console.log('delete testing');
+        console.log(`id: ${deleteCommentID}`);
     }
     
+
 
 
 
@@ -41,9 +55,10 @@ function Comments(){
             </div>
 
             <div className="prevComment-container">
-            {commentsList.map(el => {
-                return (<PreComments key={el.id} id={el.id} date={el.timeCreated} comment={el.comment}/>)
+            {reverseMap(commentsList, el => {
+                return (<PreComments key={el.id} id={el.id} date={el.timeCreated} comment={el.comment} onDeleteComment = {handleDeleteComment}/>)
             })}
+
                  
             </div>
         </div>
