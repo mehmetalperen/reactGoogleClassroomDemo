@@ -1,5 +1,6 @@
 import React from 'react';
 import RouncProfilePic from '../RoundProfilePic';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 
@@ -53,15 +54,26 @@ function ReplyComment(props) {
 
 
     return(
-        <div style={{display: "block"}}>
-            <div style={{margin: "10px 10px 0 10px", display: 'flex'}}>
+        <div style={{display: "flex", justifyContent:"space-between"}}>
+            <div className="" style={{margin: "10px 0", display: 'flex', justifyContent:"space-between"}}>
                 <RouncProfilePic style={{margin: "10px"}}/>
                 <div style={{margin: "0 0 0 20px"}}>
                     <h6 style={{display: "block"}}>UserName <span style={{fontWeight: 'lighter'}}> {`${createdDate.month}${createdDate.day}`}</span></h6>
                     <p style={{display: "block"}}className="date-p">{props.reply}</p>                        
                 </div>
-
+            </div>
+            <div className="editBtn-contanier">
+                <div className="dropdown-btn">
+                    <button ><MoreVertIcon /></button>
+                    <ul>
+                        <li><a href="#">Edit</a></li>
+                        <li onClick={()=>{props.onDelete(props.id)}}><a>Delete</a></li>
+                        <li><a href="#">Copy Link</a></li>
+                    </ul>
                 </div>
+            </div>
+
+            
 
         </div>
     )

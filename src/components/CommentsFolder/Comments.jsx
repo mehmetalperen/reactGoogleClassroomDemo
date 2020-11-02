@@ -28,7 +28,6 @@ function Comments(){
             }
         }
 
-        console.log(commentsList);
         setCommentsList(prevComments => {return [...prevComments, commetObj]});
     }
 
@@ -38,10 +37,19 @@ function Comments(){
                 return comment.id !== deleteCommentID;
             })
         })
-        console.log('delete testing');
-        console.log(`id: ${deleteCommentID}`);
+        
     }
     
+    const CommentEdit = edittedCommentObj => {
+        setCommentsList(prevComments =>{
+            return prevComments.filter(commentItem => {
+                if (commentItem.id === edittedCommentObj.id) {
+                    commentItem.comment = edittedCommentObj.editComment;
+                }
+                return commentItem;
+            })
+        })
+    }
 
 
 
@@ -56,7 +64,7 @@ function Comments(){
 
             <div className="prevComment-container">
             {reverseMap(commentsList, el => {
-                return (<PreComments key={el.id} id={el.id} date={el.timeCreated} comment={el.comment} onDeleteComment = {handleDeleteComment}/>)
+                return (<PreComments key={el.id} id={el.id} date={el.timeCreated} comment={el.comment} onDeleteComment = {handleDeleteComment} onEditComment={CommentEdit}/>)
             })}
 
                  

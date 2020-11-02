@@ -8,8 +8,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import './prevComments.css'
 import ReplyComment from './ReplyComment'
 import { reverseMap } from '../util/helpers';
-
-
+import EditComments from './EditComments'
 
 
 
@@ -60,12 +59,13 @@ switch(createdDate.month) {
         createdDate.month='Dec';
         break;
 }
-
+//typing reply to a comment
 const [typingReply, setTypingReply] = useState('');
 const handleTypingReply = event => {
     setTypingReply(event.target.value);
 }
 
+//adding reply to a comment
 const [replyComments, setReplyComments] = useState([]);
 const handleAddReply = () => {
     let ID;
@@ -89,10 +89,9 @@ const handleAddReply = () => {
     setTypingReply('')
 }
 
+//handle showing and hiding replies
 const [showMoreComments, setShowMoreComments] = useState(false);
 const [messeageToggle, setMesseageToggle] = useState('Show')
-
-
 
 useEffect(() => {
 
@@ -100,7 +99,25 @@ useEffect(() => {
 }, [showMoreComments]);
 
 
- 
+//handle delete replies
+const handleDeleteReplies = deleteReplyID => {
+    setReplyComments(prevReplies=> {
+        return prevReplies.filter(reply => {
+            return reply.id !== deleteReplyID
+        })
+    })
+}
+
+//handle Edit comment
+const [editComment, setEditComment] = useState(false);
+const CancelEditing = () =>{
+    setEditComment(false)
+}
+const HandleEditedCommentSubmit = editedComment => {
+    props.onEditComment({id: props.id, editComment: editedComment});
+    setEditComment(false)
+
+}
 
     return(
         <div className="prevComment-box" style={{marginBottom: "20px"}}>
@@ -118,7 +135,7 @@ useEffect(() => {
                     <div className="dropdown-btn">
                         <button ><MoreVertIcon /></button>
                         <ul>
-                            <li><a href="#">Edit</a></li>
+                            <li onClick={()=>{setEditComment(true)}}><a>Edit</a></li>
                             <li onClick={()=>{
                                 props.onDeleteComment(props.id)
                                 }}><a>Delete</a></li>
@@ -127,6 +144,8 @@ useEffect(() => {
                     </div>
                 </div>           
             </div>
+            {editComment? <EditComments onCancelEdit={CancelEditing} textToEdit={props.comment} saveEdit = {HandleEditedCommentSubmit}/>: null}
+            
 
             <div className="main-content-container">
                 <p className="comment-p">{props.comment}</p>
@@ -158,7 +177,7 @@ useEffect(() => {
                     <h6 className="show-hide-h6"
                         onClick={()=> {
                             setShowMoreComments(!showMoreComments)
-                            }}>{replyComments.length} <span style={{fontWeight: "lighter"}}> Comment {messeageToggle}</span></h6>
+                            }}>{replyComments.length} <span style={{fontWeight: "lighter"}}> Comment{replyComments.length>1? 's': null} {messeageToggle}</span></h6>
                 </div>:
                  null
                  }
@@ -167,7 +186,7 @@ useEffect(() => {
                 {
                     showMoreComments?//I want it to render newest to oldes but it does the opposite. I think I could achieve my goal by using for loop. but I feel like there is a better way of doing it.
                     reverseMap(replyComments, el => {
-                    return (<ReplyComment key={el.id} id={el.id} date={el.timeCreated} reply={el.reply}/>)
+                    return (<ReplyComment key={el.id} id={el.id} date={el.timeCreated} reply={el.reply} onDelete={handleDeleteReplies}/>)
                 }):
                  null
                 }
