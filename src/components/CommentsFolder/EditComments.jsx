@@ -20,8 +20,8 @@ const HandleEditTyping = event => {
         <div className='edit-comment-wrapper'>
             <div className="edit-comment-container">
                 <div className="announcement-header">
-                    <h4 style={{color: "coral"}}><ChatBubbleOutlineIcon color="primary"/> Announcement</h4>
-                    <IconButton aria-label="close" color="seconadry" onClick={()=> {props.onCancelEdit()}}>
+                    <h4 style={{color: "coral"}}><ChatBubbleOutlineIcon color="primary"/> {props.type}</h4>
+                    <IconButton aria-label="close" color="text" onClick={()=> {props.onCancelEdit()}}>
                         <CancelIcon />
                     </IconButton>
                 </div>

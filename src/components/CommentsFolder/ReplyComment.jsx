@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RouncProfilePic from '../RoundProfilePic';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
-
+import EditComments from './EditComments';
 
 function ReplyComment(props) {
 
@@ -51,7 +50,16 @@ function ReplyComment(props) {
             break;
     }
 
+    //Handle edit reply
+    const [editReply, setEditReply] = useState(false)
+    const CancelEditing = () => {
+        setEditReply(false);
+    }
 
+    const HandleEditedReplySubmit = (newReply) => {
+        props.onEditReply({id: props.id, reply: newReply})
+        setEditReply(false);
+    }
 
     return(
         <div style={{display: "flex", justifyContent:"space-between"}}>
@@ -66,14 +74,15 @@ function ReplyComment(props) {
                 <div className="dropdown-btn">
                     <button ><MoreVertIcon /></button>
                     <ul>
-                        <li><a href="#">Edit</a></li>
+                        <li onClick={()=>{setEditReply(true)}}><a>Edit</a></li>
                         <li onClick={()=>{props.onDelete(props.id)}}><a>Delete</a></li>
-                        <li><a href="#">Copy Link</a></li>
+                        
                     </ul>
                 </div>
             </div>
+            {editReply? <EditComments type={'Comment'} onCancelEdit={CancelEditing} textToEdit={props.reply} saveEdit = {HandleEditedReplySubmit}/>: null}
 
-            
+           
 
         </div>
     )

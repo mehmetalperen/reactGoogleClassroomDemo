@@ -7,58 +7,18 @@ import SendIcon from '@material-ui/icons/Send';
 import FormControl from 'react-bootstrap/FormControl'
 import './prevComments.css'
 import ReplyComment from './ReplyComment'
-import { reverseMap } from '../util/helpers';
+import { reverseMap, getMonthString } from '../util/helpers';
 import EditComments from './EditComments'
 
 
 
 function PreComments(props){
 
-let createdDate = {
-    month: props.date.month,
+const createdDate = {
+    month: getMonthString(props.date.month),
     day: props.date.day
 }
 
-switch(createdDate.month) {
-    case 0:
-    createdDate.month = 'Jan';
-    break;
-
-    case 1:
-        createdDate.month = "Feb";
-        break;
-    case 2:
-        createdDate.month = "Mar";
-        break;
-    case 3: 
-    createdDate.month = "Apr";
-        break;
-    case 4:
-        createdDate.month = "May";
-        break;
-    
-    case 5:
-        createdDate.month = 'Jun'
-        break;
-    case 6:
-        createdDate.month = "Jul"
-        break;
-    case 7:
-        createdDate.month = "Aug"
-        break;
-    case 8:
-        createdDate.month ='Sep'
-        break;
-    case 9:
-        createdDate.month = 'Oct';
-        break;
-    case 10:
-        createdDate.month ='Nov';
-        break;
-    case 11:
-        createdDate.month='Dec';
-        break;
-}
 //typing reply to a comment
 const [typingReply, setTypingReply] = useState('');
 const handleTypingReply = event => {
@@ -94,7 +54,6 @@ const [showMoreComments, setShowMoreComments] = useState(false);
 const [messeageToggle, setMesseageToggle] = useState('Show')
 
 useEffect(() => {
-
     !showMoreComments? setMesseageToggle('Show'): setMesseageToggle("Hide")
 }, [showMoreComments]);
 
@@ -107,10 +66,21 @@ const handleDeleteReplies = deleteReplyID => {
         })
     })
 }
+//Handle edit reply 
+const HandleEdittedReply = editedReplyObj => {
+    setReplyComments(prevReplies => {
+        return prevReplies.filter(replyItem => {
+            if (replyItem.id === editedReplyObj.id) {
+                replyItem.reply = editedReplyObj.reply;
+            }
+            return replyItem;
+        })
+    })
+}
 
 //handle Edit comment
 const [editComment, setEditComment] = useState(false);
-const CancelEditing = () =>{
+const CanseEditComment = () =>{
     setEditComment(false)
 }
 const HandleEditedCommentSubmit = editedComment => {
@@ -144,7 +114,7 @@ const HandleEditedCommentSubmit = editedComment => {
                     </div>
                 </div>           
             </div>
-            {editComment? <EditComments onCancelEdit={CancelEditing} textToEdit={props.comment} saveEdit = {HandleEditedCommentSubmit}/>: null}
+            {editComment? <EditComments type={'Annoncement'} onCancelEdit={CanseEditComment} textToEdit={props.comment} saveEdit = {HandleEditedCommentSubmit}/>: null}
             
 
             <div className="main-content-container">
@@ -184,9 +154,9 @@ const HandleEditedCommentSubmit = editedComment => {
 
 
                 {
-                    showMoreComments?//I want it to render newest to oldes but it does the opposite. I think I could achieve my goal by using for loop. but I feel like there is a better way of doing it.
+                    showMoreComments?
                     reverseMap(replyComments, el => {
-                    return (<ReplyComment key={el.id} id={el.id} date={el.timeCreated} reply={el.reply} onDelete={handleDeleteReplies}/>)
+                    return (<ReplyComment key={el.id} id={el.id} date={el.timeCreated} reply={el.reply} onDelete={handleDeleteReplies} onEditReply={HandleEdittedReply}/>)
                 }):
                  null
                 }
