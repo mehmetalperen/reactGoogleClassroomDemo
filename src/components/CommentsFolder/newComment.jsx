@@ -11,7 +11,13 @@ import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import Button from 'react-bootstrap/Button'
 import RoundProfilePic from '../RoundProfilePic'
-
+import 'date-fns'
+import Grid from '@material-ui/core/Grid'
+import DateFnsUtils from '@date-io/date-fns'
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker
+} from '@material-ui/pickers'
 
 
 
@@ -25,13 +31,28 @@ function NewComment(props){
         setTypingVal(event.target.value);
     }
 
+    // Handle schudeling a post
+    const [selectDate, setSelectDate] = useState(
+        new Date()
+    )
+    const handleDateChange = date => {
+        setSelectDate(date)
+    }
+    const [isSettingSchedule, setIsSettingSchedule] = useState(false);
+    const CreateScheduledPost = time => {
+        props.onScheduledPost({
+            comment: typingVal,
+            setTime: time
+        });
+        //Mon Nov 02 2020 21:00:36 GMT-0800 (Pacific Standard Time)
+    }
+
     return(
 
         !isBoxClicked?
          <div className="preview-box" onClick={()=> {setIsBoxClicked(!isBoxClicked)}}><RoundProfilePic /><p>Share something with your class..</p></div>:
          <div  className="afterClicked">
             <div className="comment-box">
-
             
                 <div className="class-select-btn">
                     <DropdownButton
@@ -81,12 +102,15 @@ function NewComment(props){
                         </DropdownButton>
                     </div>
                     <div className="cancel-btn">
-                        <Button variant="outline-secondary" onClick={()=> {setIsBoxClicked(!isBoxClicked)}}>Cancel</Button>
+                        <Button variant="outline-secondary" onClick={()=> {
+                            setIsBoxClicked(false)
+                            setTypingVal('')
+                            }}>Cancel</Button>
 
                     </div>        
                     <div className="post-btn">
                     <DropdownButton
-                                    
+                            disabled={false}
                             variant="outline-secondary"
                             title={`Post`}
                         >
@@ -96,12 +120,53 @@ function NewComment(props){
                                 setTypingVal('');
                                 setIsBoxClicked(false)
                                 }}>Post</Dropdown.Item>
-                            <Dropdown.Item eventKey="2">Schudel Post</Dropdown.Item>
+                            <Dropdown.Item eventKey="2" onClick={()=> {
+                                setIsSettingSchedule(true)
+                                }}>Schudel Post</Dropdown.Item>
                             <Dropdown.Item eventKey="3">Save Draft</Dropdown.Item>
                         </DropdownButton>
                     </div>
         
             </div>
+
+            {isSettingSchedule? 
+            <div className="setSchedule-container">
+                <div className="setSchedule-box">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justify="space-around">
+                            <KeyboardTimePicker 
+                                
+                                margin="normal"
+                                id="time-picker"
+                                label="Time Picker"
+                                value={selectDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label' : 'change date'
+                                }}
+                            />
+                        </Grid>
+                    </MuiPickersUtilsProvider> 
+                    <div className="schedule-btn-group">
+                        <Button bgcolor="text" onClick={()=>{
+                            setIsSettingSchedule(false)
+                            }}>Cancel</Button>
+                        <Button bgcolor="text" onClick={()=> {
+                            CreateScheduledPost(selectDate)
+                            setTypingVal('');
+                            setIsBoxClicked(false)
+                            setIsSettingSchedule(false)
+                        }
+                        }>Done</Button>
+                    </div>
+                    
+                </div>
+                
+            </div>:
+            null
+            }
+
+
      </div>
     )
 }

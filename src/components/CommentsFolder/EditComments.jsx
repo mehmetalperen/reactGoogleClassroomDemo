@@ -35,7 +35,7 @@ const HandleEditTyping = event => {
                 </div>
                 <hr />
                 <div className="announcement-footer">
-                <Button color="text" onClick={()=> {props.onCancelEdit()}}>Cancel</Button>
+                <Button color="danger" onClick={()=> {props.onCancelEdit()}}>Cancel</Button>
                 <Button color="primary" onClick={()=> {props.saveEdit(TypingEdit)}}>Save</Button>
 
                 </div>

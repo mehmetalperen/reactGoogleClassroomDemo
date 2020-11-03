@@ -9,8 +9,30 @@ import { reverseMap } from '../util/helpers';
 function Comments(){
 
     const [commentsList, setCommentsList] = useState([]);
+    const [scheduledPosts, setScheduledPosts] = useState([]);
 
-
+    const HandleAddScheduledPost = scheduledPostObj => {
+        setScheduledPosts(previousPost => {
+            return [...previousPost, {
+                comment: scheduledPostObj.comment,
+                executionHour: scheduledPostObj.setTime.getHours(),
+                executionMin: scheduledPostObj.setTime.getMinutes()
+            }]
+        })
+    }
+    let checkScheduledPosts = setInterval(() => {
+        const currentTime = new Date()
+        scheduledPosts.forEach((post, index) => {
+            if (currentTime.getHours() === post.executionHour && currentTime.getMinutes() === post.executionMin) {
+                handleAddComment(post.comment);
+                scheduledPosts.splice(index, 1)
+                
+            }
+        })
+        if (scheduledPosts.length === 0) {
+            clearInterval(checkScheduledPosts);
+        }
+    }, 1000);
 
     const handleAddComment = newComment => {
         let ID;
@@ -59,7 +81,7 @@ function Comments(){
         <div>
             
             <div className="comment-container" style={{marginBottom: "20px"}}>
-                <NewComment onAdd={handleAddComment} />
+                <NewComment onAdd={handleAddComment} onScheduledPost={HandleAddScheduledPost}/>
             </div>
 
             <div className="prevComment-container">
