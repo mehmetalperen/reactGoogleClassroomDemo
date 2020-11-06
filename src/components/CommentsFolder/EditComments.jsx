@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 function EditComments(props){
 
 
-
 const [TypingEdit, setTypingEdit] = useState(props.textToEdit)
 
 const HandleEditTyping = event => {

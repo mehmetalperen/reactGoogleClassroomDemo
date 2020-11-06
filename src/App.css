@@ -54,3 +54,72 @@ html {
 
 }
 
+
+@media only screen and (max-width: 782px) {
+  .App {
+    
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 250px 2fr;
+    grid-template-areas:
+    "navbar"
+    "title"
+    "comment"
+    ;
+    grid-gap: 0.8rem;
+  }
+
+
+  .navbar-wrapper {
+    grid-area: navbar;
+
+  }
+
+  .class-title-wrapper {
+    grid-area: title;
+    margin-top: 0;
+    margin: 0;
+    margin: 0 2%;
+
+
+
+    
+  }
+
+
+  .upcoming-event-wrapper {
+    grid-area: upcoming;
+    min-height: fit-content;
+    display: none;
+    margin: 0;
+
+
+  }
+
+
+  .comment-wrapper {
+    grid-area: comment;
+    min-height: fit-content;
+    margin: 0 10%;
+
+
+  }
+}
+
+/* 
+.App {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
+  grid-template-rows: 0.2fr 300px 1.5fr 1.5fr;
+
+  grid-template-areas:
+   "navbar navbar navbar navbar navbar navbar navbar"
+   ". title title title title title ."
+   ". upcoming comment comment comment comment ."
+   ". upcoming comment comment comment comment ."
+   ;
+   grid-gap: 0.8rem;
+   background-color: white;
+
+   
+} */

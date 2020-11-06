@@ -19,8 +19,6 @@ import {
     KeyboardTimePicker
 } from '@material-ui/pickers'
 
-
-
 function NewComment(props){
 
     const [isBoxClicked, setIsBoxClicked] = useState(false);
@@ -32,17 +30,16 @@ function NewComment(props){
     }
 
     // Handle schudeling a post
-    const [selectDate, setSelectDate] = useState(
-        new Date()
-    )
+    const [selectDate, setSelectDate] = useState(null);
     const handleDateChange = date => {
+        console.log(`date: ${date}`)
         setSelectDate(date)
     }
     const [isSettingSchedule, setIsSettingSchedule] = useState(false);
-    const CreateScheduledPost = time => {
+    const CreateScheduledPost = () => {
         props.onScheduledPost({
             comment: typingVal,
-            setTime: time
+            setTime: selectDate
         });
         //Mon Nov 02 2020 21:00:36 GMT-0800 (Pacific Standard Time)
     }
@@ -148,14 +145,16 @@ function NewComment(props){
                         </Grid>
                     </MuiPickersUtilsProvider> 
                     <div className="schedule-btn-group">
-                        <Button bgcolor="text" onClick={()=>{
+                        <Button variant="outline-danger" onClick={()=>{
                             setIsSettingSchedule(false)
                             }}>Cancel</Button>
-                        <Button bgcolor="text" onClick={()=> {
-                            CreateScheduledPost(selectDate)
+                        <Button  variant="outline-primary" onClick={()=> {
+                            CreateScheduledPost()
                             setTypingVal('');
-                            setIsBoxClicked(false)
                             setIsSettingSchedule(false)
+                            setSelectDate(null)
+                            setIsBoxClicked(false)
+                             
                         }
                         }>Done</Button>
                     </div>

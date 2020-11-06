@@ -63,8 +63,8 @@ function ReplyComment(props) {
 
     return(
         <div style={{display: "flex", justifyContent:"space-between"}}>
-            <div className="" style={{margin: "10px 0", display: 'flex', justifyContent:"space-between"}}>
-                <RouncProfilePic style={{margin: "10px"}}/>
+            <div className="" style={{margin: "auto 0", display: 'flex', justifyContent:"space-between"}}>
+                <RouncProfilePic />
                 <div style={{margin: "0 0 0 20px"}}>
                     <h6 style={{display: "block"}}>UserName <span style={{fontWeight: 'lighter'}}> {`${createdDate.month}${createdDate.day}`}</span></h6>
                     <p style={{display: "block"}}className="date-p">{props.reply}</p>                        
