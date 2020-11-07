@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
-import Navbar from './components/Navbar';
-import ClassTitle from './components/ClassTitle';
-import UpcomingEvent from './components/UpcomingEvent';
-import Comments from './components/CommentsFolder/Comments';
+import Navbar from './components/Navbar'
+import ClassHomePage from './Pages/ClassHomePage';
+import ClassesPage from './Pages/ClassesPage'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import {ThemeProvider} from '@material-ui/core';
-import { createMuiTheme} from '@material-ui/core/styles';
-
-
+import {createMuiTheme} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -40,29 +38,17 @@ function App() {
 
   return (
     <ThemeProvider theme = {theme}>
-      <div className="App">
-        <div className="navbar-wrapper">
-          <Navbar/>
+      <Router>
+        <div className="App">
+          <div className="navbar-wrapper">
+            <Navbar/>
+          </div>
+          <Switch>
+            <Route path='/classes' component={ClassesPage} />
+            <Route path='/classHome' component={ClassHomePage} />
+          </Switch>
         </div>
-
-        <div className="class-title-wrapper">
-        <ClassTitle />
-    
-        </div>
-        <div className="emptyness-wrapper">
-
-        </div>
-
-        <div className="upcoming-event-wrapper">
-          <UpcomingEvent />
-        </div>
-
-        <div className="comment-wrapper">
-          <Comments /> 
-        </div>
-
-        
-      </div>
+      </Router>
     </ThemeProvider>
     
   );
