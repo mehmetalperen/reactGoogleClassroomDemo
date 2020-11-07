@@ -7,10 +7,18 @@
     padding: 10px;
     margin: 20px auto;
     display: flex;
+    min-width: 250px;
+    justify-content: space-between;
     
 
 }
 
+h3{
+    color: coral;
+}
+h5 {
+    color: black;
+}
 
 
 

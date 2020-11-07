@@ -44,8 +44,10 @@ function App() {
             <Navbar/>
           </div>
           <Switch>
-            <Route path='/classes' component={ClassesPage} />
-            <Route path='/classHome' component={ClassHomePage} />
+            
+            <Route path='/classes' exact component={ClassesPage} />
+            <Route path='/classHome/:id' component={ClassHomePage} />
+            
           </Switch>
         </div>
       </Router>

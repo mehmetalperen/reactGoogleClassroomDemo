@@ -1,17 +1,52 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import './ClassesPage.css'
 import ClassPreviewCard from '../components/ClassPreviewCard';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import { reverseMap } from '../components/util/helpers';
 
 function ClassesPage(){
 
     const [classList, setClassList] = useState([]);
 
-    const [addingClass, setAddingClass] = useState(true)
+    //when "add class" button clicked -> display "add class container"
+    const [addingClass, setAddingClass] = useState(false)
+
+    //Class name
+    const [className, setClassName] = useState('');
+
+    //Meeting Info
+    const [meetingInfo, setMeetingInfo] = useState('');
+
+    //handle className typing
+    const HandleTypingClassName = event => {
+        setClassName(event.target.value);
+    } 
+    //handle meeting info typing
+    const HandleMeetingInfoTyping = event => {
+        setMeetingInfo(event.target.value);
+    }
+
+    const HandleCreatingClass = () => {
+        let ID;
+        if (classList.length > 0) {
+            ID = classList[classList.length-1].id + 1;
+        } else {
+            ID = 0;
+        }
+        let ClassObj = {
+            id: ID,
+            name: className,
+            meetingTime: meetingInfo
+        }
+        setClassList(previousClassess => {
+            return [...previousClassess, ClassObj]
+        });
+        setClassName('');
+        setMeetingInfo('')
+    }
 
 
 
@@ -24,27 +59,31 @@ function ClassesPage(){
                         <AddIcon color="primary"/>
                     </IconButton>
                 </div>
-                <ClassPreviewCard />
-                <ClassPreviewCard />
-                <ClassPreviewCard />
-                <ClassPreviewCard />
-                <ClassPreviewCard />
-                <ClassPreviewCard />
+                {reverseMap(classList, classInfo => {
+                    return <ClassPreviewCard key={classInfo.id} id={classInfo.id} name={classInfo.name} meeting={classInfo.meetingTime}/>
+                })}
             </div>  
 
             {addingClass? 
             <div className="create-class-container">
                 <div className="create-class-box">
                     <div>
-                        <TextField id="filled-basic" label="Filled" variant="filled" placeholder="Class name" onChange={()=> {alert('typing')}}/>
+                        <TextField id="filled-basic" label="Filled" variant="filled" placeholder="Class name" value={className} onChange={HandleTypingClassName}/>
                     </div>
                     <div>
-                        <TextField id="filled-basic" label="Filled" variant="filled" placeholder="Meeting Info"/>
+                        <TextField id="filled-basic" label="Filled" variant="filled" placeholder="Meeting Info" value={meetingInfo} onChange={HandleMeetingInfoTyping}/>
                     </div>
 
                     <div className="action-buttons-box">
-                        <Button onClick={()=>{setAddingClass(false)}}>Cancel</Button>
-                        <Button>Create</Button>
+                        <Button onClick={()=>{
+                            setAddingClass(false)
+                            setClassName('');
+                            setMeetingInfo('')
+                            }}>Cancel</Button>
+                        <Button onClick={()=>{
+                            HandleCreatingClass();
+                            setAddingClass(false)
+                        }}>Create</Button>
 
                     </div>
                 </div>

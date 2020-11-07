@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ClassHomePage.css';
-import Navbar from '../components/Navbar';
 import ClassTitle from '../components/ClassTitle';
 import UpcomingEvent from '../components/UpcomingEvent';
 import Comments from '../components/CommentsFolder/Comments';
 
 
+function ClassHomePage({match}) {
 
-function ClassHomePage() {
+  useEffect(() =>{
+    console.log(match)
+  },[])
 
-  
 
   return (
       <div className="ClassHomePage">
