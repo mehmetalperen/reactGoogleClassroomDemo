@@ -20,12 +20,12 @@ import {Link} from 'react-router-dom'
             <AppBar position="static">
                 <Toolbar>
                 <IconButton edge="start" color={orange[50]} aria-label="menu">
-                    <Link to="/classes">
+                    <Link to="/">
                         <HomeIcon />
                     </Link>
                 </IconButton>
                 <Typography variant="h6">
-                    <Link to="/classes">
+                    <Link to="/">
                         <h4 style={{color: "white"}}>Google Classroom</h4>
                     </Link>
                 </Typography>

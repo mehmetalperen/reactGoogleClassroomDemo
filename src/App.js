@@ -45,7 +45,7 @@ function App() {
           </div>
           <Switch>
             
-            <Route path='/classes' exact component={ClassesPage} />
+            <Route path='/' exact component={ClassesPage} />
             <Route path='/classHome/:id' component={ClassHomePage} />
             
           </Switch>
