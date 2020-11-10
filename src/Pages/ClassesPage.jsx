@@ -9,6 +9,7 @@ import { reverseMap } from '../components/util/helpers';
 
 function ClassesPage(){
 
+    ////////////////////////Creating New Class
     const [classList, setClassList] = useState([]);
 
     //when "add class" button clicked -> display "add class container"
@@ -28,7 +29,6 @@ function ClassesPage(){
     const HandleMeetingInfoTyping = event => {
         setMeetingInfo(event.target.value);
     }
-
     const HandleCreatingClass = () => {
         let ID;
         if (classList.length > 0) {
@@ -47,6 +47,31 @@ function ClassesPage(){
         setClassName('');
         setMeetingInfo('')
     }
+    ////////////////////////Edit Class
+    const HandleEdit = (id, name, meeting) => {
+        setClassList(prevClasses => {
+            return prevClasses.filter(item => {
+                if (item.id === id) {
+                    item.name = name;
+                    item.meetingTime = meeting;
+                }
+                return item
+            })
+        })
+    }
+    ////////////////////Handle Delete Class
+    const HandleDeleteClass = (id) => {
+        let indexOfDeletedItem;
+        classList.forEach((item, index)=>{
+            if (item.id === id) {
+                indexOfDeletedItem = index;
+            }
+        });
+        classList.splice(indexOfDeletedItem, 1);
+        setClassList(prevClasses => {
+            return [...prevClasses]
+        })
+    }
 
 
 
@@ -59,9 +84,11 @@ function ClassesPage(){
                         <AddIcon color="primary"/>
                     </IconButton>
                 </div>
+
                 {reverseMap(classList, classInfo => {
-                    return <ClassPreviewCard key={classInfo.id} id={classInfo.id} name={classInfo.name} meeting={classInfo.meetingTime}/>
+                    return <ClassPreviewCard key={classInfo.id} id={classInfo.id} name={classInfo.name} meeting={classInfo.meetingTime} onEdit={HandleEdit} onDelete={HandleDeleteClass}/>
                 })}
+
             </div>  
 
             {addingClass? 

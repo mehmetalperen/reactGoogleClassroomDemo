@@ -3,6 +3,7 @@ import './ClassHomePage.css';
 import ClassTitle from '../components/ClassTitle';
 import UpcomingEvent from '../components/UpcomingEvent';
 import Comments from '../components/CommentsFolder/Comments';
+import { render } from '@testing-library/react';
 
 
 function ClassHomePage({match}) {
@@ -11,6 +12,7 @@ function ClassHomePage({match}) {
     console.log(match)
   },[])
 
+  
 
   return (
       <div className="ClassHomePage">

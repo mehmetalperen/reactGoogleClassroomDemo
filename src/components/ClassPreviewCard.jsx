@@ -8,12 +8,7 @@ import Button from '@material-ui/core/Button';
 
 function ClassPreviewCard(props){
 
-    
-    // const classInfoObj = {
-    //     id: props.id,
-    //     name: props.name,
-    //     meeting: props.meeting
-    // }
+
 
     const [editClass, setEditClass] = useState(false);
     const [className, setClassName] = useState('');
@@ -38,7 +33,7 @@ function ClassPreviewCard(props){
                     <button ><MoreVertIcon /></button>
                     <ul>
                         <li onClick={()=>{setEditClass(true)}}><a>Edit</a></li>
-                        <li><a>Delete</a></li>  
+                        <li onClick={()=>{props.onDelete(props.id)}}><a>Delete</a></li>  
                     </ul>
                 </div>
             </div> 
@@ -55,7 +50,12 @@ function ClassPreviewCard(props){
 
                     <div className="action-buttons-box">
                         <Button onClick={()=>{setEditClass(false)}}>Cancel</Button>
-                        <Button >Submit</Button>
+                        <Button onClick={()=>{
+                            props.onEdit(props.id, className, classInfo);
+                            setClassName('');
+                            setClassInfo('');
+                            setEditClass(false);
+                        }} >Submit</Button>
 
                     </div>
                 </div>
